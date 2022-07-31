@@ -1,0 +1,11 @@
+{"level":"info","message":"HTTP GET / 200 11ms","meta":{},"timestamp":"2022-07-31 16:58:20"}
+{"level":"warn","message":"HTTP GET /favicon.ico 404 5ms","meta":{},"timestamp":"2022-07-31 16:58:21"}
+{"level":"error","message":"HTTP POST /api/v1/auth/register 500 121ms","meta":{},"timestamp":"2022-07-31 17:30:54"}
+{"level":"error","message":"HTTP POST /api/v1/auth/register 500 11ms","meta":{},"timestamp":"2022-07-31 17:32:17"}
+{"level":"error","message":"HTTP POST /api/v1/auth/register 500 24ms","meta":{},"timestamp":"2022-07-31 17:32:58"}
+{"level":"error","message":"HTTP POST /api/v1/auth/register 500 202ms","meta":{},"timestamp":"2022-07-31 17:33:22"}
+{"level":"error","message":"HTTP POST /api/v1/auth/register 500 1493ms","meta":{},"timestamp":"2022-07-31 17:33:44"}
+{"level":"error","message":"HTTP POST /api/v1/auth/register 500 35ms","meta":{},"timestamp":"2022-07-31 17:35:47"}
+{"level":"error","message":"HTTP POST /api/v1/auth/register 500 43ms","meta":{},"timestamp":"2022-07-31 17:36:26"}
+{"level":"error","message":"HTTP POST /api/v1/auth/register 500 55ms","meta":{},"timestamp":"2022-07-31 17:36:59"}
+{"level":"info","message":"HTTP POST /api/v1/auth/register 201 49ms","meta":{},"timestamp":"2022-07-31 17:37:43"}
