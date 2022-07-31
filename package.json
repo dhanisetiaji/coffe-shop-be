@@ -22,6 +22,7 @@
     "multer-storage-cloudinary": "^4.0.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.19",
+    "slugify": "^1.6.5",
     "winston": "^3.8.1"
   }
 }

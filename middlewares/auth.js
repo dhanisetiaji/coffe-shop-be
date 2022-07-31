@@ -12,9 +12,8 @@ module.exports = {
                 next()
             })
         } else {
-            return res.status(403).json({ success: false, message: 'Please Login' })
+            return res.status(403).json({ success: false, message: 'Unauthorized access' })
         }
-
     },
     isAdmin: (req, res, next) => {
         if (req.decodeToken.role !== 'admin') {
