@@ -120,5 +120,20 @@ module.exports = {
         } catch (err) {
             return res.status(500).json({ success: false, message: `Error: ${err.code}` });
         }
+    },
+    remove: async (req, res) => {
+        try {
+            const userId = req.params.userId;
+            const checkData = await Users.getUserById(userId);
+            if (!checkData.length) {
+                return res.status(404).json({
+                    success: false, message: `Error: Data by ${userId} not found!`, data: []
+                })
+            }
+            const results = await Users.remove(userId);
+            return res.status(200).json({ success: true, message: 'Success delete!', data: results });
+        } catch (err) {
+            return res.status(500).json({ success: false, message: `Error: ${err.code}` });
+        }
     }
 }

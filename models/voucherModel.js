@@ -1,17 +1,17 @@
 const db = require('../helpers/db')
 
 module.exports = {
-    countAllUser: () => {
+    countAllVoucher: () => {
         return new Promise((resolve, reject) => {
-            db.query('SELECT COUNT(userId) AS total FROM users', (err, result) => {
+            db.query('SELECT COUNT(voucherId) AS total FROM vouchers', (err, result) => {
                 if (err) reject(err)
                 resolve(result[0].total)
             })
         })
     },
-    getUserById: (userId) => {
+    getVoucherById: (voucherId) => {
         return new Promise((resolve, reject) => {
-            db.query(`SELECT email,name,userImage,dob,address,phone,gender,role,password,created_at,updated_at FROM users WHERE userId='${userId}'`, (error, result) => {
+            db.query(`SELECT * FROM vouchers WHERE voucherId='${voucherId}'`, (error, result) => {
                 if (error) {
                     reject({
                         success: false,
@@ -22,9 +22,23 @@ module.exports = {
             })
         })
     },
-    getUser: (userId) => {
+    getVoucherByCode: (code) => {
         return new Promise((resolve, reject) => {
-            db.query(`SELECT email,name,userImage,dob,address,role,phone,gender,created_at,updated_at FROM users WHERE userId='${userId}'`, (error, result) => {
+            db.query(`SELECT * FROM vouchers WHERE voucherCode='${code}'`, (error, result) => {
+                if (error) {
+                    reject({
+                        success: false,
+                        message: error.sqlMessage,
+                    })
+                }
+                resolve(result)
+            })
+        })
+    }
+    ,
+    getAllVoucher: (search, orderBy, limit, offset) => {
+        return new Promise((resolve, reject) => {
+            db.query(`SELECT * FROM vouchers WHERE voucherCode LIKE '%${search}%' OR voucherName LIKE '%${search}%' OR voucherCode LIKE '%${search}%' OR voucherDesc LIKE '%${search}%' ORDER BY voucherId ${orderBy} LIMIT ${limit} OFFSET ${offset}`, (error, result) => {
                 if (error) {
                     reject({
                         success: false,
@@ -35,23 +49,23 @@ module.exports = {
             })
         })
     },
-    getAllUser: (search, orderBy, limit, offset) => {
+    add: async (data) => {
         return new Promise((resolve, reject) => {
-            db.query(`SELECT * FROM users WHERE email LIKE '%${search}%' OR name LIKE '%${search}%' OR address LIKE '%${search}%' OR dob LIKE '%${search}%' ORDER BY userId ${orderBy} LIMIT ${limit} OFFSET ${offset}`, (error, result) => {
-                if (error) {
-                    // console.log(error);
+            db.query(`INSERT INTO vouchers SET ?`, data, (err, results) => {
+                if (err) {
                     reject({
-                        success: false,
-                        message: error.sqlMessage,
+                        success: false, message: err.sqlMessage, data: {
+                            errCode: err.code, errNo: err.errno
+                        }
                     })
                 }
-                resolve(result)
+                resolve(results)
             })
         })
     },
-    update: async (userId, data) => {
+    update: async (data, voucherId) => {
         return new Promise((resolve, reject) => {
-            db.query(`UPDATE users SET ? WHERE userId = ?`, [data, userId], (err, results) => {
+            db.query(`UPDATE vouchers SET ? WHERE voucherId= ?`, [data, voucherId], (err, results) => {
                 if (err) {
                     reject({
                         success: false, message: err.sqlMessage, data: {
@@ -60,15 +74,15 @@ module.exports = {
                     })
                 }
                 resolve({
-                    userId,
-                    ...data,
+                    voucherId,
+                    ...data
                 })
             })
         })
     },
-    remove: async (userId) => {
+    remove: async (voucherId) => {
         return new Promise((resolve, reject) => {
-            db.query(`DELETE FROM users WHERE userId = ?`, userId, (err, results) => {
+            db.query(`DELETE FROM vouchers WHERE voucherId= ?`, voucherId, (err, results) => {
                 if (err) {
                     reject({
                         success: false, message: err.sqlMessage, data: {

@@ -17,6 +17,9 @@ module.exports = {
             const result = await Auth.register(email, phone, password)
             return res.status(201).json({ success: true, message: 'Successfully Register!', data: result })
         } catch (error) {
+			if(error.code == 'ER_DUP_ENTRY'){
+				return res.status(500).json({ success: false, message: `Email already exists, please login!` })
+			}
             return res.status(500).json({ success: false, message: `Error: ${error.code}` })
         }
     },
@@ -52,6 +55,15 @@ module.exports = {
             })
         } catch (error) {
             return res.status(500).json({ success: false, message: `Error: ${error.code}` })
+        }
+    },
+    verifyToken: async (req, res) => {
+        try {
+            const token = req.headers.authorization.split(' ')[1]
+            const decoded = jwt.verify(token, process.env.SECRET_KEY_JWT)
+            return res.status(200).json({ success: true, message: 'Successfully verified!', data: decoded })
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message })
         }
     }
 }
