@@ -98,5 +98,5 @@ yarn start
 
 ## Contributors
 
-- Fullstack [Dhani Setiaji (PM)](https://github.com/dhanisetiaji)
+- [Dhani Setiaji](https://github.com/dhanisetiaji)
 
